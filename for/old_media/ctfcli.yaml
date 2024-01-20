@@ -1,0 +1,17 @@
+version: "0.1"
+id: old-media
+name: Old Media
+category: forensics
+description: |
+  We found a old floopy disk in the drawer and decided it would make a good CTF challenge.
+
+  Author: Joshua Scarsbrook
+
+tags:
+  - medium
+
+files:
+  - ./publish/oldschool.img
+
+flags:
+  - oiccflag{hope_you_had_fun_with_a_old_school_filesystem}

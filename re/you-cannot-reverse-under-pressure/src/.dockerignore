@@ -1,0 +1,4 @@
+nativeCompile/
+sessions/
+tmp/
+check.wasm

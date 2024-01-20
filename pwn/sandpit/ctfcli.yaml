@@ -1,0 +1,20 @@
+version: "0.1"
+id: sandpit
+name: Sandpit
+category: pwn
+description: |
+  no playing outside the sandpit!
+
+  Author: john
+
+connection_info: nc oceaniacc.com 31256
+
+tags:
+  - medium
+
+files:
+  - ./publish/main.c
+  - ./publish/sandpit
+
+flags:
+  - oiccflag{n0w_3sc4p3_4_r34l_s4ndb0x!}

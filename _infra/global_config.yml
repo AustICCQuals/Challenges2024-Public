@@ -1,0 +1,9 @@
+global_defaults:
+  type: dynamic
+  value: 250
+  extra:
+    function: logarithmic
+    initial: 250
+    minimum: 100
+    decay: 10
+  state: hidden

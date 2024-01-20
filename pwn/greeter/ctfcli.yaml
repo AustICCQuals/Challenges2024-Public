@@ -1,0 +1,20 @@
+version: "0.1"
+id: greeter
+name: Greeter
+category: pwn
+description: |
+  Hello, pwner.
+
+  Author: joseph
+
+tags:
+  - easy
+
+connection_info: nc oceaniacc.com 31451
+
+files:
+  - ./publish/greeter
+  - ./publish/greeter.c
+
+flags:
+  - oiccflag{w3lc0me_2_th3_w0rld_0f_pwn}

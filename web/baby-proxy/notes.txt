@@ -1,0 +1,6 @@
+details:
+ - "easy" challenge
+ - flask webapp
+ - acts as a proxy-as-a-service
+ - renders responses using template engine, which allows the attacker to trigger SSTI and leak flag variable
+ - may require hardening on disk to prevent someone nuking the box

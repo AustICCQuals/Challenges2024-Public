@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  rubychef:
+    build: src/
+    container_name: rubychef
+    ports:
+      - 1337:1337
+    restart: "always"
+    read_only: true

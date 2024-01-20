@@ -1,0 +1,19 @@
+version: "0.1"
+id: ruby-chef
+name: Ruby Chef
+category: web
+description: |
+  Ruby Chef is now available for beta testing! Functionality is currently limited, but additional features can be easily added due to its modular design.
+
+  Author: joseph
+
+tags:
+  - medium
+
+connection_info: http://oceaniacc.com:31534
+
+files:
+  - ./publish/ruby-chef.zip
+
+flags:
+  - oiccflag{master_chef_in_the_ruby_kitchen!}

@@ -1,0 +1,18 @@
+version: "0.1"
+id: discrete-leaky-prng
+name: Discrete Leaky PRNG
+category: crypto
+description: |
+  The discrete logarithm problem is thought to be hard, so it's okay if I generate the discrete logarithms with a weak RNG right?
+
+  Author: joseph
+
+tags:
+  - medium
+
+files:
+  - ./publish/discrete-leaky-prng.py
+  - ./publish/output.txt
+
+flags:
+  - oiccflag{cracking_mt_with_many_twists_drains_sanity_bit_by_bit!}

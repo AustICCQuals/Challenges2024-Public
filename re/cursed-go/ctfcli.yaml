@@ -1,0 +1,17 @@
+version: "0.1"
+id: cursed-go
+name: Roller Coaster Codegen
+category: rev
+description: |
+  We bring you the latest research from the cursed coding institute. They set out to learn how deeply you can nest control flow before reversing tools cry. Did they succead?
+
+  Author: Joshua Scarsbrook
+
+tags:
+  - medium
+
+files:
+  - ./publish/out
+
+flags:
+  - oiccflag{hope_you_enjoyed_reading_my_nicely_nested_code}

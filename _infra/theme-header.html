@@ -1,0 +1,163 @@
+<style id="theme-color">
+  :root {
+    --theme-color: #2d3047;
+    --solved-color: #7256b5;
+  }
+  
+  .navbar{background-color: var(--theme-color) !important;}
+  .jumbotron{background-color: var(--theme-color) !important;}
+
+  .challenge-name {
+    margin-top: 8px;
+  }
+  .challenge-value {
+    font-size: 1.5rem;
+  }
+  .challenge-button {
+    text-align: left;
+    min-height: 110px;
+    display: flex;
+    background-color: #3c3e4a;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: none;
+  }
+  .challenge-button > p {
+    font-size: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 90%;
+    line-height: normal;
+  }
+  .points-worth {
+    float: left;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+  .difficulty-tag {
+    float: right;
+    padding: 2px 4px;
+  }
+  .corner-button-check {
+    margin-top: 3px !important;
+    margin-right: 35px !important;
+  }
+  .solve-count {
+    font-size: 0.8em;
+  }
+  .point-tag {
+    width: 100%;
+  }
+  .solved-challenge > p {
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .solved-challenge {
+    background-color: var(--solved-color) !important;
+    opacity: 0.6;
+  }
+  .solved-challenge > .point-tag > .difficulty-tag {
+    color: #6c6a71;
+  }
+  .challenge-tags {
+    margin-bottom: 24px;
+  }
+  .difficulty-tag {
+    color: #2c2b2e;
+  }
+  .challenge-desc {
+    word-break: break-word;
+  }
+  .challenge-files {
+    margin-top: 16px;
+  }
+  #challenge-input {
+    width: 110%;
+    height: 101% !important;
+  }
+</style>
+
+<script>
+  const difficulties = ["beginner", "easy", "medium", "hard", "none"];
+  const difficultiesTags = {
+    beginner: "#82eee1",
+    easy: "#abd750",
+    medium: "#e9db5e",
+    hard: "#f6775e",
+    none: "#aea4a2",
+  };
+
+  const get_difficulty_tag = (challenge) => {
+    var difficulty_tag = challenge.tags.find((t) =>
+      difficulties.includes(t.value.toLowerCase())
+    );
+    return difficulty_tag ? difficulty_tag.value.toLowerCase() : "none";
+  };
+
+  const render_additional = (challenges) => {
+    for (let chall of challenges) {
+      render_solve_counts_and_tags(chall);
+    }
+  };
+
+  const render_solve_counts_and_tags = (challenge) => {
+    const cbs = Array.from(document.querySelectorAll(".challenge-button"));
+    const thisOne = cbs.find((c) => c.value == challenge.id);
+    if (!thisOne) return;
+    const checkEl = Array.from(thisOne.children).find((e) => e.tagName == "I");
+    if (checkEl) {
+      checkEl.classList.remove("fa-check");
+      checkEl.classList.add("fa-flag");
+    }
+    const solveCountEl = document.createElement("div");
+    solveCountEl.classList.add("solve-count");
+    solveCountEl.innerText =
+      challenge.solves + " solve" + (challenge.solves == 1 ? "" : "s");
+    const pointEl = Array.from(thisOne.children).find(
+      (e) => e.tagName == "SPAN"
+    );
+    thisOne.insertBefore(solveCountEl, pointEl);
+    thisOne.removeChild(pointEl);
+    const pointTagEl = document.createElement("div");
+    pointTagEl.classList.add("point-tag");
+    const newPointEl = document.createElement("div");
+    newPointEl.classList.add("points-worth");
+    newPointEl.innerText = challenge.value;
+    const newTagEl = document.createElement("div");
+    newTagEl.classList.add("difficulty-tag");
+    const dTag = get_difficulty_tag(challenge);
+    newTagEl.innerText = dTag;
+    newTagEl.style.background = difficultiesTags[dTag];
+    pointTagEl.appendChild(newPointEl);
+    pointTagEl.appendChild(newTagEl);
+    thisOne.appendChild(pointTagEl);
+  };
+
+  window.BETA_sortChallenges = (challenges) => {
+    window.challenges = challenges;
+    window._challenges = challenges;
+
+    var sorted_challs = Array.from(challenges);
+    sorted_challs.sort((chall1, chall2) => {
+      if (chall1.solves != chall2.solves) return chall2.solves - chall1.solves;
+      var d1 = get_difficulty_tag(chall1);
+      var d2 = get_difficulty_tag(chall2);
+      return difficulties.indexOf(d1) - difficulties.indexOf(d2);
+    });
+
+    wantToUpdate();
+    return sorted_challs;
+  };
+
+  function wantToUpdate() {
+    const checkInterval = setInterval(checkUpdate, 200);
+    function checkUpdate() {
+      if (window.challenges) {
+        clearInterval(checkInterval);
+        render_additional(window.challenges);
+        window.challenges = null;
+      }
+    }
+  }
+</script>

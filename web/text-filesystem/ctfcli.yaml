@@ -1,0 +1,19 @@
+version: "0.1"
+id: text-filesystem
+name: Text Filesystem
+category: web
+description: |
+  I'm currently building a text-based file system running on PHP, can you make sure it's safe?
+
+  Author: dls
+
+tags:
+  - medium
+
+connection_info: http://oceaniacc.com:31512
+
+files:
+  - ./textfs.zip
+
+flags:
+  - oiccflag{62d070b52c79178ff240c3d2edbf71d4}

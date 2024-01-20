@@ -1,0 +1,122 @@
+version: "3"
+services:
+  re_you_cannot_reverse_under_pressure:
+    build: re/you-cannot-reverse-under-pressure/src
+    ports:
+      - "31754:8080"
+    networks:
+      - re_you_cannot_reverse_under_pressure
+  web_babyproxy:
+    hostname: babyproxy
+    read_only: true
+    build:
+      context: web/baby-proxy
+      dockerfile: ./Dockerfile
+    container_name: babyproxy
+    ports:
+      - "31647:3817"
+    networks:
+      - web_babyproxy
+  web_rubychef:
+    build: web/ruby-chef/src
+    container_name: rubychef
+    ports:
+      - 31534:1337
+    restart: "always"
+    read_only: true
+    networks:
+      - web_rubychef
+  web_sparky:
+    hostname: sparky
+    read_only: true
+    build:
+      context: web/sparky
+      dockerfile: ./Dockerfile
+    container_name: sparky
+    ports:
+      - "31523:4567"
+    networks:
+      - web_sparky
+  web_text_filesystem_php:
+    hostname: php
+    build:
+      context: web/text-filesystem
+      dockerfile: ./config/php.Dockerfile
+    container_name: textfs-php
+    volumes:
+      - './web/text-filesystem/src:/var/www/html'
+    networks:
+      - web_text_filesystem
+  web_text_filesystem_nginx:
+    hostname: nginx
+    image: nginx:1.25.3-alpine3.18-slim
+    container_name: textfs-nginx
+    ports:
+      - '0.0.0.0:31512:8080'
+    volumes:
+      - './web/text-filesystem/src:/var/www/html'
+      - './web/text-filesystem/config/nginx:/etc/nginx/conf.d'
+    networks:
+      - web_text_filesystem
+  web_text_filesystem_mariadb:
+    hostname: mariadb
+    build:
+      context: web/text-filesystem/
+      dockerfile: ./config/mariadb.Dockerfile
+    container_name: textfs-mariadb
+    ports:
+      - '127.0.0.1:3306:3306'
+    restart: 'on-failure'
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecretpassword123!
+    volumes:
+      - './web/text-filesystem/config/sql:/docker-entrypoint-initdb.d'
+      - './web/text-filesystem/data/mariadb:/var/lib/mysql'
+    networks:
+      - web_text_filesystem
+  crypto_echo_command_breaker:
+    build: crypto/echo-command-breaker/src
+    privileged: true
+    ports:
+      - "31452:1337"
+    networks:
+      - crypto_echo_command_breaker
+  pwn_greeter:
+    build: pwn/greeter/src
+    privileged: true
+    ports:
+      - "31451:1337"
+    networks:
+      - pwn_greeter
+  pwn_know_thy_elf:
+    build: pwn/know-thy-elf/source
+    privileged: true
+    ports:
+      - "31412:1337"
+    networks:
+      - pwn_know_thy_elf
+  pwn_sandpit:
+    build: pwn/sandpit/source
+    privileged: true
+    ports:
+      - "31256:1337"
+    networks:
+      - pwn_sandpit
+  pwn_cardshop:
+    build: pwn/cardshop/source
+    privileged: true
+    ports:
+      - "31253:1337"
+    networks:
+      - pwn_cardshop
+networks:
+  pwn_cardshop:
+  pwn_sandpit:
+  pwn_know_thy_elf:
+  pwn_greeter:
+  crypto_echo_command_breaker:
+  web_text_filesystem:
+  web_sparky:
+  web_rubychef:
+  web_babyproxy:
+  re_you_cannot_reverse_under_pressure:

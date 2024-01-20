@@ -1,0 +1,21 @@
+version: "0.1"
+id: know-thy-elf
+name: Know Thy ELF
+category: pwn
+description: |
+  reading for sELF improvement
+
+  Author: john
+
+tags:
+  - medium
+
+connection_info: nc oceaniacc.com 31412
+
+files:
+  - ./publish/entry.sh
+  - ./publish/construct-main.py
+  - ./publish/construct-win.py
+
+flags:
+  - oiccflag{4_r3s0lut10n_1n_7h3_n3w_y34r}

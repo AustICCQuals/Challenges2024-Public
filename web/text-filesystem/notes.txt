@@ -1,0 +1,2 @@
+virtual file system, temporary, supports txt files only, safe query on creation, unsafe on rename/duplication/moving, 2nd order sqli
+

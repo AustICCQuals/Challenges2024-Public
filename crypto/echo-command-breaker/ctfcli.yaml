@@ -1,0 +1,19 @@
+version: "0.1"
+id: echo-command-breaker
+name: Echo Command Breaker
+category: crypto
+description: |
+  Let's warm up with a simple [ECB](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) puzzle. Minimal cryptography knowledge required!
+
+  Author: joseph
+
+tags:
+  - easy
+
+connection_info: nc oceaniacc.com 31452
+
+files:
+  - ./publish/server.py
+
+flags:
+  - oiccflag{ecb_could_also_stand_for_easy_crypto_brainteaser_:)}

@@ -1,0 +1,19 @@
+version: "0.1"
+id: baby-proxy
+name: Baby Proxy
+category: web
+description: |
+  I am new to Flask and decided to build a web proxy! I left a prize in `/flag.txt` for anyone who manages to hack it :)
+
+  Author: dls
+
+tags:
+  - easy
+
+connection_info: http://oceaniacc.com:31647
+
+files:
+  - ./baby-proxy.zip
+
+flags:
+  - oiccflag{f9d4ad4692b36b3260cb44635c05f5b5}

@@ -1,0 +1,18 @@
+version: "0.1"
+id: additional-emoji-suffering
+name: Additional Emoji Suffering
+category: crypto
+description: |
+  ![additional_emoji_suffering.png](https://cdn.discordapp.com/attachments/438239527266549760/1197798708859912282/image.png)
+
+  Author: joseph
+
+tags:
+  - hard
+
+files:
+  - ./publish/additional-emoji-suffering.py
+  - ./publish/output.txt
+
+flags:
+  - oiccflag{the_emoji_induced_suffering_never_ends!!}

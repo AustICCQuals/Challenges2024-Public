@@ -1,0 +1,17 @@
+version: "0.1"
+id: the-first-repository
+name: The First Repository
+category: forensics
+description: |
+  We call thee to read the bible git repo and find the mystery hidden inside.
+
+  Author: Joshua Scarsbrook
+
+tags:
+  - easy
+
+files:
+  - ./publish/bible.pack
+
+flags:
+  - oiccflag{and_thus_the_flag_was_given_though_commitment}

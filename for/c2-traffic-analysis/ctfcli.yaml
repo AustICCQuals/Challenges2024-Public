@@ -1,0 +1,18 @@
+version: "0.1"
+id: c2-traffic-analysis
+name: C2 Traffic Analysis
+category: forensics
+description: |
+  Attached is the network packet capture from a C2 instance that pwn'd us recently. It looks like TLS but can you pull anything from it?
+
+  Author: Joshua Scarsbrook
+
+tags:
+  - hard
+
+files:
+  - ./publish/main.go
+  - ./publish/out.pcap
+
+flags:
+  - oiccflag{careful_not_to_leak_too_many_secrets}

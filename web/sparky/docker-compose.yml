@@ -1,0 +1,11 @@
+version: '3'
+services:
+    sparky:
+        hostname: sparky
+        read_only: true
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        container_name: sparky
+        ports:
+            - "4567:4567"

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Can't Reverse Under Pressure</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        h1 {
+            border-bottom: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+
+        #details {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 5px;
+            border: 1px solid black;
+        }
+
+        h2 {
+            border-bottom: 1px solid black;
+            padding: 2px;
+            margin: 0;
+        }
+
+        #description {
+            text-align: justify;
+
+            padding: 10px;
+        }
+
+        #message {
+            font-size: 200%;
+            margin: 20px;
+        }
+
+        #counter {
+            font-size: 200%;
+            font-weight: bold;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>You Can't Reverse Under Pressure</h1>
+
+        <div id="details">
+            <h2 id="name"></h2>
+            <div id="description"></div>
+        </div>
+
+        <div id="counter"></div>
+
+        <div>
+            <input type="number" name="check" id="check">
+            <button id="doCheck">Check</button>
+        </div>
+
+        <div id="message"></div>
+    </div>
+
+    <script type="module">
+        async function decodeBase64(data) {
+            return await (await fetch("data:application/octet;base64," + data)).arrayBuffer();
+        }
+
+        await(async () => {
+            const startResponse = await fetch("/start", {
+                method: "POST",
+            });
+            const startJson = await startResponse.json();
+
+            const sessionId = startJson.sessionId;
+
+            let currentModule = null;
+            let endTime = 0;
+
+            const timer = setInterval(() => {
+                // Find the distance between now and the count down date
+                var distance = endTime - Math.round(+(new Date()) / 1000);
+
+                // Time calculations for minutes and seconds
+                var minutes = Math.floor((distance % (60 * 60)) / 60);
+                var seconds = Math.floor(distance % 60);
+
+                // Display the result in the element with id="demo"
+                if (distance < 0) {
+                    document.querySelector("#counter").textContent = `Out of Time`;
+                } else {
+                    document.querySelector("#counter").textContent = `Remaining ${minutes.toString(10).padStart(2, "0")}:${seconds.toString(10).padStart(2, "0")}`;
+                }
+            }, 1000);
+
+            async function startStage(data) {
+                document.querySelector("#message").textContent = data.message;
+
+                if (data.module !== "") {
+                    const initialCode = await decodeBase64(data.module);
+
+                    endTime = data.endTime;
+                    currentModule = await WebAssembly.instantiate(initialCode);
+
+                    document.querySelector("#name").textContent = data.name;
+                    document.querySelector("#description").textContent = data.description;
+                } else {
+                    clearInterval(timer);
+
+                    document.querySelector("#counter").textContent = "";
+                }
+            }
+
+            document.querySelector("#doCheck").addEventListener("click", async () => {
+                const guess = Number.parseInt(document.querySelector("#check").value);
+
+                document.querySelector("#check").value = "";
+
+                const result = currentModule.instance.exports.check(guess);
+
+                if (result === 1) {
+                    const submitResponse = await fetch("/submit", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            sessionId,
+                            guess,
+                        })
+                    });
+                    const submitJson = await submitResponse.json();
+
+                    await startStage(submitJson);
+                } else {
+                    document.querySelector("#message").textContent = "Incorrect!";
+                }
+            });
+
+            await startStage(startJson);
+        })();
+    </script>
+</body>
+
+</html>

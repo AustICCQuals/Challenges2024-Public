@@ -1,0 +1,19 @@
+version: "0.1"
+id: sparky
+name: Sparky
+category: web
+description: |
+  We recovered the source code for a strange API, we tried hacking it but we're running out of options, can you help us??
+
+  Author: dls
+
+tags:
+  - hard
+
+connection_info: http://oceaniacc.com:31523
+
+files:
+  - ./sparky.zip
+
+flags:
+  - oiccflag{730abe1f3c4d7f1b558d100805d8e79f}

@@ -1,0 +1,22 @@
+version: "0.1"
+id: cardshop
+name: Card Shop
+category: pwn
+description: |
+  youve tried heap note, now try heap greeting card
+
+  Author: john
+
+connection_info: nc oceaniacc.com 31253
+
+tags:
+  - hard
+
+files:
+  - ./publish/cardshop
+  - ./publish/ld-linux-x86-64.so.2
+  - ./publish/libc.so.6
+  - ./publish/main.c
+
+flags:
+  - oiccflag{s43s0n5_gr33t1ng5!}

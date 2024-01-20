@@ -1,0 +1,33 @@
+version: '3'
+services:
+    php:
+        hostname: php
+        build:
+            context: .
+            dockerfile: ./config/php.Dockerfile
+        container_name: textfs-php
+        volumes:
+            - './src:/var/www/html'
+    nginx:
+        hostname: nginx
+        image: nginx:1.25.3-alpine3.18-slim
+        container_name: textfs-nginx
+        ports:
+            - '0.0.0.0:8102:8080'
+        volumes:
+            - './src:/var/www/html'
+            - './config/nginx:/etc/nginx/conf.d'
+    mariadb:
+        hostname: mariadb
+        build:
+            context: .
+            dockerfile: ./config/mariadb.Dockerfile
+        container_name: textfs-mariadb
+        ports:
+            - '127.0.0.1:3306:3306'
+        restart: 'on-failure'
+        environment:
+            MYSQL_ROOT_PASSWORD: supersecretpassword123!
+        volumes:
+            - './config/sql:/docker-entrypoint-initdb.d'
+            - './data/mariadb:/var/lib/mysql'

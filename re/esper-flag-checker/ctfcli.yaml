@@ -1,0 +1,17 @@
+version: "0.1"
+id: esper-flag-checker
+name: ESPer Flag Checker
+category: rev
+description: |
+  Prove your ESPer skills and guess the flag!
+
+  Author: joseph
+
+tags:
+  - hard
+
+files:
+  - ./publish/flash.bin
+
+flags:
+  - oiccflag{an_ESPecially_skilled_reverse_engineer!}

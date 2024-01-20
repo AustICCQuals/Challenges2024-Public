@@ -1,0 +1,18 @@
+version: "0.1"
+id: old-school-crypto
+name: Old School Crypto
+category: rev
+description: |
+  Our system is a bit legacy. We found this message from 2000 years ago and the program that produced it. Can you decode the message?
+
+  Author: Joshua Scarsbrook
+
+tags:
+  - easy
+
+files:
+  - ./publish/roman.py
+  - ./publish/publish.txt
+
+flags:
+  - oiccflag{this_flag_may_not_be_MM_years_old_but_the_lessons_are}
