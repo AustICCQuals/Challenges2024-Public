@@ -7,9 +7,9 @@ COPY flag.txt /flag.txt
 
 RUN /usr/sbin/useradd --no-create-home -u 1000 ctf
 
-RUN gem install sinatra \
-  && gem install thin \
-  && gem install erubis
+RUN gem install rackup \
+  && gem install erubis \
+  && gem install sinatra
 
 USER ctf
 

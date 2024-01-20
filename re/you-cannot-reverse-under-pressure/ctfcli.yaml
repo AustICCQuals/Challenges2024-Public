@@ -7,11 +7,13 @@ description: |
 
   Author: Joshua Scarsbrook
 
+connection_info: http://oceaniacc.com:31754
+
 tags:
-  - TODO
+  - medium
 
 files:
-  - TODO
+  - ./publish/server
 
 flags:
-  - TODO
+  - oiccflag{well_done_it_turns_out_you_can_do_this_pretty_fast}
